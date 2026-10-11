@@ -7,6 +7,8 @@ lang: ru
 <script src="site.js"></script>
 <noscript><p><a href="index.html">Главная</a> · <a href="00_base.html">База</a> · <a href="01_map.html">Карта</a></p></noscript>
 
+**Формулировка в программе:** Построение модулярной функции, малая теорема Пикара.
+
 > **Покрытие лекциями:** нет в лекциях · **Источник:** стандартное изложение (Шабат, т. I, гл. III; Гурвиц–Курант; Альфорс) · **Опирается на:** [Билет 22](ticket_22.html), [E1](00_base.html#E1), [E2](00_base.html#E2), [E4](00_base.html#E4), [F1](00_base.html#F1), [F2](00_base.html#F2), [C2](00_base.html#C2)
 
 ::: nolect

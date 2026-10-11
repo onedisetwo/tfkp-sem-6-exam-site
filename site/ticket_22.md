@@ -7,6 +7,8 @@ lang: ru
 <script src="site.js"></script>
 <noscript><p><a href="index.html">Главная</a> · <a href="00_base.html">База</a> · <a href="01_map.html">Карта</a></p></noscript>
 
+**Формулировка в программе:** Формула Кристоффеля-Шварца.
+
 > **Покрытие лекциями:** нет в лекциях · **Источник:** стандартное изложение (Лаврентьев–Шабат, гл. II; Шабат, т. I) · **Опирается на:** [E1](00_base.html#E1), [E2](00_base.html#E2), [E3](00_base.html#E3), [E4](00_base.html#E4), [B1](00_base.html#B1), [C2](00_base.html#C2), [F1](00_base.html#F1)
 
 ::: nolect
