@@ -56,11 +56,12 @@
   var PAGES = [
     { href: "index.html", t: "Главная" },
     { href: "00_base.html", t: "База" },
+    { href: "04_overview.html", t: "Обзор" },
     { href: "01_map.html", t: "Карта" },
     { href: "02_formulas.html", t: "Формулы" },
     { href: "03_plan.html", t: "План" }
   ];
-  var READY_PAGES = { "index.html": true, "00_base.html": true, "01_map.html": true, "02_formulas.html": true, "03_plan.html": true };
+  var READY_PAGES = { "index.html": true, "00_base.html": true, "01_map.html": true, "02_formulas.html": true, "03_plan.html": true, "04_overview.html": true };
 
   var COVER_LABEL = { ok: "есть в лекциях", part: "частично", miss: "нет в лекциях" };
   var STATUS_LABEL = { ready: "готов", soon: "пишется", wait: "ждёт лекций" };
@@ -122,7 +123,7 @@
     var file = (href || "").split("#")[0];
     var tk = ticketByHref(file);
     if (tk) return tk.status === "ready";
-    if (/^(index|00_base|01_map|02_formulas|03_plan)\.html$/.test(file)) return !!READY_PAGES[file];
+    if (/^(index|00_base|01_map|02_formulas|03_plan|04_overview)\.html$/.test(file)) return !!READY_PAGES[file];
     return true;
   }
 

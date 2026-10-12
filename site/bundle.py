@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "..", "tfkp_site.html")
 
 # Порядок страниц не важен для работы, но так файл читается легче.
-FIRST = ["index.html", "00_base.html", "01_map.html", "02_formulas.html", "03_plan.html"]
+FIRST = ["index.html", "00_base.html", "01_map.html", "02_formulas.html", "03_plan.html", "04_overview.html"]
 SKIP = {"notes_16_23.html"}  # служебная страница, в меню её нет
 
 
