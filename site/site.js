@@ -1,7 +1,8 @@
 /* ТФКП — общий скрипт сайта.
    Подключается первой строкой каждого .md:  <script src="site.js"></script>
    Делает: верхнее меню, переключатель темы, оглавление страницы,
-   «раскрыть все ответы», отметку «выучено», навигацию между билетами,
+   «раскрыть все ответы», отметки «выучено» (формулировки и доказательства
+   отдельно, видны и на графе карты), навигацию между билетами,
    раскрытие ответов при печати, таблицу билетов на главной.
 
    ЕДИНСТВЕННОЕ место, где хранится статус страниц, — массив TICKETS ниже.
@@ -105,13 +106,23 @@
     return p === "" ? "index.html" : decodeURIComponent(p);
   }
   function badge(cls, text) { return el("span", { "class": "badge " + cls, text: text }); }
-  function learnedSet() { return load("tfkp-learned", []); }
-  function isLearned(n) { return learnedSet().indexOf(n) !== -1; }
-  function setLearned(n, on) {
-    var s = learnedSet().filter(function (x) { return x !== n; });
+  /* выученность: две категории, у каждой свой массив номеров */
+  var KINDS = ["defs", "proofs"];
+  var KIND_LABEL = { defs: "Формулировки", proofs: "Доказательства" };
+  function learnedSet(kind) { return load("tfkp-learned-" + kind, []); }
+  function isLearned(n, kind) { return learnedSet(kind).indexOf(n) !== -1; }
+  function setLearned(n, kind, on) {
+    var s = learnedSet(kind).filter(function (x) { return x !== n; });
     if (on) s.push(n);
-    save("tfkp-learned", s);
+    save("tfkp-learned-" + kind, s);
   }
+  function learnedLevel(n) { return KINDS.filter(function (k) { return isLearned(n, k); }).length; }
+  (function migrate() {   // старый единый флаг «выучен» = выучено всё
+    var old = load("tfkp-learned", null);
+    if (!old) return;
+    KINDS.forEach(function (k) { old.forEach(function (n) { if (!isLearned(n, k)) setLearned(n, k, true); }); });
+    try { localStorage.removeItem("tfkp-learned"); } catch (e) { /* без сохранения */ }
+  })();
   function ticketByHref(href) {
     var m = /ticket_(\d\d)\.html/.exec(href || "");
     if (!m) return null;
@@ -145,7 +156,9 @@
       box.appendChild(el("div", { "class": "group", text: GROUPS[g] }));
       TICKETS.filter(function (t) { return t.g === g; }).forEach(function (t) {
         var inner = [el("span", { "class": "num", text: t.n + "." }), el("span", { "class": "title", text: t.t })];
-        if (isLearned(t.n)) inner.push(badge("done", "выучен"));
+        var lv = learnedLevel(t.n);
+        if (lv === 2) inner.push(badge("done", "выучен"));
+        else if (lv === 1) inner.push(badge("part", isLearned(t.n, "defs") ? "формулировки" : "доказательства"));
         else if (t.status !== "ready") inner.push(badge(t.status, STATUS_LABEL[t.status]));
         var item = t.status === "ready"
           ? el("a", { href: ticketHref(t.n) }, inner)
@@ -235,17 +248,20 @@
     if (!tk) return;
     var header = document.getElementById("title-block-header");
     var bar = el("p", { "class": "no-print" });
-    var btn = el("button", { type: "button", "class": "btn" });
-    function sync() {
-      var on = isLearned(tk.n);
-      btn.textContent = on ? "✓ Выучен" : "Отметить как выученный";
-      btn.classList.toggle("on", on);
-    }
-    btn.addEventListener("click", function () { setLearned(tk.n, !isLearned(tk.n)); sync(); });
-    sync();
     bar.appendChild(badge(tk.cover, COVER_LABEL[tk.cover]));
-    bar.appendChild(document.createTextNode(" "));
-    bar.appendChild(btn);
+    bar.appendChild(document.createTextNode(" Выучено: "));
+    KINDS.forEach(function (k) {
+      var btn = el("button", { type: "button", "class": "btn", title: "Отметить: " + KIND_LABEL[k].toLowerCase() + " выучены" });
+      function sync() {
+        var on = isLearned(tk.n, k);
+        btn.textContent = (on ? "✓ " : "") + KIND_LABEL[k];
+        btn.classList.toggle("on", on);
+      }
+      btn.addEventListener("click", function () { setLearned(tk.n, k, !isLearned(tk.n, k)); sync(); });
+      sync();
+      bar.appendChild(btn);
+      bar.appendChild(document.createTextNode(" "));
+    });
     if (header) header.appendChild(bar);
 
     var i = TICKETS.indexOf(tk);
@@ -268,37 +284,55 @@
     var host = document.getElementById("tickets-table");
     if (!host) return;
     host.innerHTML = "";
-    var learned = learnedSet().length;
+    var nd = learnedSet("defs").length, np = learnedSet("proofs").length;
     var ready = TICKETS.filter(function (t) { return t.status === "ready"; }).length;
-    host.appendChild(el("p", { text: "Готово страниц: " + ready + " из 23. Выучено: " + learned + " из 23." }));
-    var bar = el("div", { "class": "progress", title: "Выучено" }, [el("span")]);
-    bar.firstChild.style.width = (learned / 23 * 100) + "%";
+    host.appendChild(el("p", { text: "Готово страниц: " + ready + " из 23. Выучено формулировок: " + nd + " из 23, доказательств: " + np + " из 23." }));
+    var bar = el("div", { "class": "progress", title: "Выучено (формулировки и доказательства вместе)" }, [el("span")]);
+    bar.firstChild.style.width = ((nd + np) / 46 * 100) + "%";
     host.appendChild(bar);
 
     var table = el("table");
     table.appendChild(el("thead", null, [el("tr", null, [
       el("th", { text: "№" }), el("th", { text: "Билет" }), el("th", { text: "Лекции" }),
-      el("th", { text: "Страница" }), el("th", { text: "Выучен" })
+      el("th", { text: "Страница" }),
+      el("th", { text: "Ф", title: "Выучены формулировки" }), el("th", { text: "Д", title: "Выучены доказательства" })
     ])]));
     var tb = el("tbody");
     GROUP_ORDER.forEach(function (g) {
-      tb.appendChild(el("tr", null, [el("th", { colspan: "5", text: GROUPS[g] })]));
+      tb.appendChild(el("tr", null, [el("th", { colspan: "6", text: GROUPS[g] })]));
       TICKETS.filter(function (t) { return t.g === g; }).forEach(function (t) {
         var title = t.status === "ready" ? el("a", { href: ticketHref(t.n), text: t.t }) : el("span", { text: t.t });
-        var cb = el("input", { type: "checkbox", "aria-label": "Билет " + t.n + " выучен" });
-        cb.checked = isLearned(t.n);
-        cb.addEventListener("change", function () { setLearned(t.n, cb.checked); ticketTable(); });
-        tb.appendChild(el("tr", null, [
+        var cells = [
           el("td", { text: String(t.n) }),
           el("td", null, [title]),
           el("td", null, [badge(t.cover, COVER_LABEL[t.cover])]),
-          el("td", null, [badge(t.status, STATUS_LABEL[t.status])]),
-          el("td", null, [cb])
-        ]));
+          el("td", null, [badge(t.status, STATUS_LABEL[t.status])])
+        ];
+        KINDS.forEach(function (k) {
+          var cb = el("input", { type: "checkbox", "aria-label": "Билет " + t.n + ": " + KIND_LABEL[k].toLowerCase() + " выучены" });
+          cb.checked = isLearned(t.n, k);
+          cb.addEventListener("change", function () { setLearned(t.n, k, cb.checked); ticketTable(); });
+          cells.push(el("td", null, [cb]));
+        });
+        tb.appendChild(el("tr", null, cells));
       });
     });
     table.appendChild(tb);
     host.appendChild(table);
+  }
+
+  /* ---------- карта: выученность на графе (цвет рамки) ---------- */
+  function mapLearned() {
+    document.querySelectorAll("svg a[href]").forEach(function (a) {
+      var tk = ticketByHref(a.getAttribute("href"));
+      if (!tk) return;
+      var lv = learnedLevel(tk.n);
+      a.classList.remove("learn-1", "learn-2");
+      if (lv) a.classList.add("learn-" + lv);
+      var tip = a.querySelector("title") || a.insertBefore(document.createElementNS("http://www.w3.org/2000/svg", "title"), a.firstChild);
+      tip.textContent = "Билет " + tk.n + ": формулировки " + (isLearned(tk.n, "defs") ? "✓" : "—") +
+        ", доказательства " + (isLearned(tk.n, "proofs") ? "✓" : "—");
+    });
   }
 
   /* ---------- печать: раскрыть все ответы ---------- */
@@ -319,6 +353,7 @@
     buildToc();
     ticketExtras();
     ticketTable();
+    mapLearned();
     markPending();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
