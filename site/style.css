@@ -365,6 +365,8 @@ svg .accent-fill { fill: var(--accent); }
 svg .soft-fill { fill: var(--accent-soft); }
 svg .muted { stroke: var(--fg-soft); }
 svg text { fill: currentColor; font-family: "PT Sans", system-ui, sans-serif; }
+svg a.learn-1 rect { stroke: var(--part); stroke-width: 2.4; }   /* выучено одно: формулировки или доказательства */
+svg a.learn-2 rect { stroke: var(--ok); stroke-width: 3; }        /* выучено всё */
 
 /* ========== Оформление «Фокус» (поверх базовых правил выше) ========== */
 /* Onest normal cyrillic */
