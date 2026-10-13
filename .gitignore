@@ -7,3 +7,6 @@ tfkp_site.html
 
 # локальные настройки Claude Code
 .claude/
+
+# локальные временные файлы
+.tmp/
