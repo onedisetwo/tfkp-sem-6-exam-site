@@ -4,3 +4,6 @@ tfkp_site.html
 
 # локальные заметки QA-сессий, см. .qa/CLAUDE.md
 .qa/
+
+# локальные настройки Claude Code
+.claude/
