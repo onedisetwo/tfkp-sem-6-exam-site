@@ -668,6 +668,7 @@ math[display="block"] { padding: 0.5rem 0; }
   .key::before { background: #000; color: #fff; }
   math[display="block"], figure, table, .concept, .key, .short, .warn, .nolect, .idea, .example, .skeleton, details, li { break-inside: avoid; page-break-inside: avoid; }
   details { background: none; }
+  details.proof { break-inside: auto; page-break-inside: auto; }   /* длинное доказательство рвётся между страницами */
   details > summary { color: #000; }
   .concept { border-color: #bbb; }
 }

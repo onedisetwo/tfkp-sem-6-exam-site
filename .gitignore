@@ -1,3 +1,12 @@
 # генерируемые файлы: sh site/build.sh && python3 site/bundle.py
 site/*.html
 tfkp_site.html
+
+# локальные заметки QA-сессий, см. .qa/CLAUDE.md
+.qa/
+
+# локальные настройки Claude Code
+.claude/
+
+# локальные временные файлы
+.tmp/

@@ -38,7 +38,7 @@ $$\big(\operatorname{sn}'w\big)^2=\big(1-\operatorname{sn}^2w\big)\big(1-k^2\ope
 - [Билет 17](ticket_17.html): эллиптические функции, порядок, теоремы Лиувилля
 - [Интеграл по кривой, первообразная](00_base.html#B1)
 
-## 3. Определения и формулировки
+## 3. Определения, теоремы и доказательства
 
 **Определение.** Для $0<k<1$ (модуль) положим
 $$K=K(k)=\int_0^1\frac{dt}{\sqrt{(1-t^2)(1-k^2t^2)}},\qquad K'=\int_1^{1/k}\frac{dt}{\sqrt{(t^2-1)(1-k^2t^2)}} .$$
@@ -52,35 +52,14 @@ $$F(z)=\int_0^z\frac{d\zeta}{\sqrt{(1-\zeta^2)(1-k^2\zeta^2)}},\qquad\operatorna
 $$R=\{-K<\operatorname{Re}w<K,\ 0<\operatorname{Im}w<K'\},$$
 причём $F(\pm1)=\pm K$, $F(\pm\frac1k)=\pm K+iK'$, $F(\infty)=iK'$, $F(0)=0$.
 
-**Определение.** **Эллиптический синус** (синус Якоби) $\operatorname{sn}w=\operatorname{sn}(w;k)$ — функция, обратная к $F$: $\operatorname{sn}:R\to H$, продолженная на всю плоскость по принципу симметрии.
-
-**Теорема 2 (свойства $\operatorname{sn}$).**
-
-1. $\operatorname{sn}$ — мероморфная функция в $\mathbb C$;
-2. $\operatorname{sn}$ — эллиптическая функция с периодами $4K$ и $2iK'$; кроме того, $\operatorname{sn}(w+2K)=-\operatorname{sn}w$;
-3. в параллелограмме периодов $[0,4K)\times[0,2K')$ у $\operatorname{sn}$ простые нули $0$, $2K$ и простые полюсы $iK'$, $2K+iK'$; порядок равен 2;
-4. $\operatorname{sn}$ нечётна; $\operatorname{sn}0=0$, $\operatorname{sn}'0=1$, $\operatorname{sn}(\pm K)=\pm1$, $\operatorname{sn}(K+iK')=\frac1k$;
-5. $\operatorname{sn}$ удовлетворяет дифференциальному уравнению $(\operatorname{sn}')^2=(1-\operatorname{sn}^2)(1-k^2\operatorname{sn}^2)$.
-
-**Теорема 3 (обратная функция).** Функция $F$, продолженная по всевозможным путям в $\overline{\mathbb C}\setminus\{\pm1,\pm\frac1k\}$, — полная аналитическая функция, обратная к $\operatorname{sn}$. Если $w_0$ — одно её значение в точке $z$, то все значения — это
-$$w_0+4mK+2niK'\quad\text{и}\quad2K-w_0+4mK+2niK',\qquad m,n\in\mathbb Z .$$
-Точки $\pm1,\pm\frac1k$ — точки ветвления второго порядка.
-
-## 4. Доказательства
-
-### 4.1 Скелет доказательства
+<details class="proof"><summary>Доказательство</summary>
 
 ::: skeleton
+**Скелет.**
+
 1. **$F$ — интеграл Кристоффеля–Шварца** с вершинами $-\frac1k,-1,1,\frac1k$ и углами $\frac\pi2$. Следим за аргументом подынтегральной функции на вещественной оси: на каждом из интервалов он постоянен, и при переходе через вершину поворачивается на $\frac\pi2$ ⇒ граница $H$ идёт по сторонам прямоугольника; длины сторон $2K$ и $K'$.
 2. По принципу соответствия границ $F:H\to R$ конформна; $\operatorname{sn}=F^{-1}$.
-3. **Симметрия:** нижняя сторона $[-K,K]\leftrightarrow[-1,1]$ ⇒ $\operatorname{sn}\bar w=\overline{\operatorname{sn}w}$; боковая сторона $\operatorname{Re}w=K\leftrightarrow[1,\frac1k]$ ⇒ $\operatorname{sn}(2K-\bar w)=\overline{\operatorname{sn}w}$; верхняя сторона $\leftrightarrow$ вещественная ось через $\infty$ ⇒ $\operatorname{sn}(\bar w+2iK')=\overline{\operatorname{sn}w}$.
-4. Комбинируя: $\operatorname{sn}(2K-w)=\operatorname{sn}w$, $\operatorname{sn}(w+2iK')=\operatorname{sn}w$; нечётность ⇒ $\operatorname{sn}(w+2K)=-\operatorname{sn}w$ ⇒ периоды $4K$, $2iK'$.
-5. Нули и полюсы — из соответствия вершин; уравнение — из $F'(z)=\frac1{\sqrt{(1-z^2)(1-k^2z^2)}}$.
 :::
-
-### 4.2 Полное доказательство
-
-#### Теорема 1: $F$ отображает $H$ на прямоугольник
 
 **Шаг 1. Корректность.** $F$ голоморфна в $H$ (интеграл от голоморфной функции в односвязной области не зависит от пути, [B1](00_base.html#B1)). $F$ непрерывно продолжается на $\mathbb R$: особенности подынтегральной функции в $\pm1,\pm\frac1k$ интегрируемы ($\sim\lvert\zeta\mp1\rvert^{-1/2}$). На бесконечности подынтегральная функция $\sim\frac{\pm1}{k\zeta^2}$, поэтому $F(z)$ имеет конечный предел при $z\to\infty$ в $\overline H$.
 
@@ -95,7 +74,27 @@ $$w_0+4mK+2niK'\quad\text{и}\quad2K-w_0+4mK+2niK',\qquad m,n\in\mathbb Z .$$
 
 **Шаг 3. Конформность.** $F$ голоморфна в $H$, непрерывна в $\overline H\cup\{\infty\}$ и взаимно-однозначно отображает границу $\mathbb R\cup\{\infty\}$ на границу прямоугольника $\partial R$ с сохранением ориентации. По теореме о соответствии границ ([E3](00_base.html#E3), теорема 5.13 С5; через дробно-линейную замену переходим от $H$ к кругу) $F$ — конформное отображение $H$ на $R$. ∎
 
-#### Теорема 2: свойства $\operatorname{sn}$
+</details>
+
+**Определение.** **Эллиптический синус** (синус Якоби) $\operatorname{sn}w=\operatorname{sn}(w;k)$ — функция, обратная к $F$: $\operatorname{sn}:R\to H$, продолженная на всю плоскость по принципу симметрии.
+
+**Теорема 2 (свойства $\operatorname{sn}$).**
+
+1. $\operatorname{sn}$ — мероморфная функция в $\mathbb C$;
+2. $\operatorname{sn}$ — эллиптическая функция с периодами $4K$ и $2iK'$; кроме того, $\operatorname{sn}(w+2K)=-\operatorname{sn}w$;
+3. в параллелограмме периодов $[0,4K)\times[0,2K')$ у $\operatorname{sn}$ простые нули $0$, $2K$ и простые полюсы $iK'$, $2K+iK'$; порядок равен 2;
+4. $\operatorname{sn}$ нечётна; $\operatorname{sn}0=0$, $\operatorname{sn}'0=1$, $\operatorname{sn}(\pm K)=\pm1$, $\operatorname{sn}(K+iK')=\frac1k$;
+5. $\operatorname{sn}$ удовлетворяет дифференциальному уравнению $(\operatorname{sn}')^2=(1-\operatorname{sn}^2)(1-k^2\operatorname{sn}^2)$.
+
+<details class="proof"><summary>Доказательство</summary>
+
+::: skeleton
+**Скелет.**
+
+1. **Симметрия:** нижняя сторона $[-K,K]\leftrightarrow[-1,1]$ ⇒ $\operatorname{sn}\bar w=\overline{\operatorname{sn}w}$; боковая сторона $\operatorname{Re}w=K\leftrightarrow[1,\frac1k]$ ⇒ $\operatorname{sn}(2K-\bar w)=\overline{\operatorname{sn}w}$; верхняя сторона $\leftrightarrow$ вещественная ось через $\infty$ ⇒ $\operatorname{sn}(\bar w+2iK')=\overline{\operatorname{sn}w}$.
+2. Комбинируя: $\operatorname{sn}(2K-w)=\operatorname{sn}w$, $\operatorname{sn}(w+2iK')=\operatorname{sn}w$; нечётность ⇒ $\operatorname{sn}(w+2K)=-\operatorname{sn}w$ ⇒ периоды $4K$, $2iK'$.
+3. Нули и полюсы — из соответствия вершин; уравнение — из $F'(z)=\frac1{\sqrt{(1-z^2)(1-k^2z^2)}}$.
+:::
 
 **Шаг 1. Отражение через нижнюю сторону.** Сторона $(-K,K)$ прямоугольника переходит при $\operatorname{sn}$ в интервал $(-1,1)$ вещественной оси. Оба — отрезки прямых. По [принципу симметрии](00_base.html#E4) $\operatorname{sn}$ продолжается на отражённый прямоугольник $\overline R$ (нижний), причём
 $$\operatorname{sn}(\bar w)=\overline{\operatorname{sn}(w)} .$$
@@ -118,7 +117,13 @@ $$\operatorname{sn}(w+2iK')=\operatorname{sn}(w) .$$
 
 **Шаг 7. Значения и производная.** $\operatorname{sn}K=1$, $\operatorname{sn}(K+iK')=\frac1k$ — из соответствия вершин. $F'(0)=1$, поэтому $\operatorname{sn}'(0)=1$. Производная обратной функции: $\operatorname{sn}'(w)=\dfrac1{F'(\operatorname{sn}w)}=\sqrt{(1-\operatorname{sn}^2w)(1-k^2\operatorname{sn}^2w)}$, откуда дифференциальное уравнение. ∎
 
-#### Теорема 3: обратная функция
+</details>
+
+**Теорема 3 (обратная функция).** Функция $F$, продолженная по всевозможным путям в $\overline{\mathbb C}\setminus\{\pm1,\pm\frac1k\}$, — полная аналитическая функция, обратная к $\operatorname{sn}$. Если $w_0$ — одно её значение в точке $z$, то все значения — это
+$$w_0+4mK+2niK'\quad\text{и}\quad2K-w_0+4mK+2niK',\qquad m,n\in\mathbb Z .$$
+Точки $\pm1,\pm\frac1k$ — точки ветвления второго порядка.
+
+<details class="proof"><summary>Доказательство</summary>
 
 **Шаг 1.** Локально обратная к $\operatorname{sn}$ — это интеграл $\int\frac{d\zeta}{\sqrt{(1-\zeta^2)(1-k^2\zeta^2)}}$ с какой-то ветвью корня и константой. Значит, все ветви полной аналитической функции $\operatorname{sn}^{-1}$ — продолжения $F$.
 
@@ -126,7 +131,9 @@ $$\operatorname{sn}(w+2iK')=\operatorname{sn}(w) .$$
 
 **Шаг 3.** Точки ветвления: где два решения $w_0$ и $2K-w_0$ совпадают по модулю решётки, то есть $\operatorname{sn}'=0$: $z=\pm1,\pm\frac1k$. Обход такой точки переводит $w_0$ в $2K-w_0$ (с точностью до периода), обход двух — сдвигает на период. ∎
 
-## 5. Интуиция и картинки
+</details>
+
+## 4. Интуиция и картинки
 
 ::: idea
 **Аналогия с обычным синусом.** $\arcsin z=\int_0^z\frac{d\zeta}{\sqrt{1-\zeta^2}}$ — интеграл Кристоффеля–Шварца с двумя вершинами $\pm1$: он отображает $H$ на полуполосу $\{\lvert\operatorname{Re}w\rvert<\frac\pi2,\ \operatorname{Im}w>0\}$. Отражения через две вертикальные стороны дают период $2\pi$. Это «вырожденный прямоугольник» с $K'=\infty$; при $k\to0$ получаем $K\to\frac\pi2$ и $\operatorname{sn}(w;0)=\sin w$. Добавив вторую пару вершин $\pm\frac1k$, мы закрываем полуполосу сверху и получаем второй период.
@@ -164,7 +171,7 @@ $$\frac1{\operatorname{sn}^2w}=\wp_L(w)-\wp_L(iK'),\qquad\wp_L(iK')=-\frac{1+k^2
 <figcaption>Эллиптический интеграл F переводит верхнюю полуплоскость в прямоугольник: −1/k ↦ −K + iK′, −1 ↦ −K, 1 ↦ K, 1/k ↦ K + iK′, ∞ ↦ iK′. Отрезок [−1, 1] переходит в нижнюю сторону (выделена). Эллиптический синус — обратное отображение.</figcaption>
 </figure>
 
-## 6. Пример / типовая задача с решением
+## 5. Пример / типовая задача с решением
 
 ::: example
 **Задача 1.** Найдите $\operatorname{sn}(w+2iK')$, $\operatorname{sn}(w+4K)$, $\operatorname{sn}(K-w)$ через $\operatorname{sn}w$.
@@ -188,7 +195,7 @@ $$F(z)=iK'-\int_z^{\infty}F'(\zeta)\,d\zeta=iK'+\frac1{kz}+O(z^{-3}),$$
 **Решение.** Стороны $R$ равны $2K$ и $K'$, нужно $K'=2K$. При росте $k$ от $0$ до $1$ интеграл $K(k)$ непрерывно возрастает от $\frac\pi2$ до $\infty$, а $K'(k)=K(\sqrt{1-k^2})$ убывает от $\infty$ до $\frac\pi2$. Отношение $\frac{K'}{K}$ непрерывно и строго убывает от $\infty$ до $0$, поэтому нужное $k$ существует и единственно. (При $k=\frac1{\sqrt2}$ имеем $K'=K$, прямоугольник $2:1$.)
 :::
 
-## 7. Частые дополнительные вопросы экзаменатора
+## 6. Частые дополнительные вопросы экзаменатора
 
 - **Почему $\operatorname{sn}$ двоякопериодична?** Композиция двух отражений через параллельные стороны прямоугольника — сдвиг; по принципу симметрии каждое отражение в $w$ соответствует отражению относительно $\mathbb R$ в $z$, а два таких отражения дают тождество.
 - **Какие у $\operatorname{sn}$ периоды?** $4K$ и $2iK'$. ($2K$ — «антипериод»: $\operatorname{sn}(w+2K)=-\operatorname{sn}w$.)
@@ -198,7 +205,7 @@ $$F(z)=iK'-\int_z^{\infty}F'(\zeta)\,d\zeta=iK'+\frac1{kz}+O(z^{-3}),$$
 - **Что такое $\operatorname{cn}$ и $\operatorname{dn}$?** $\operatorname{cn}=\sqrt{1-\operatorname{sn}^2}$, $\operatorname{dn}=\sqrt{1-k^2\operatorname{sn}^2}$ (с нужными ветвями), $\operatorname{sn}'=\operatorname{cn}\operatorname{dn}$.
 - **Риманова поверхность обратной функции?** Над сферой с точками ветвления $\pm1,\pm\frac1k$ корень $\sqrt{(1-z^2)(1-k^2z^2)}$ задаёт тор ([билет 20](ticket_20.html)); $F$ — интеграл по этому тору, а $\operatorname{sn}$ его униформизует.
 
-## 8. Типичные ошибки и ловушки
+## 7. Типичные ошибки и ловушки
 
 ::: warn
 - Считать период равным $2K$: на самом деле $\operatorname{sn}(w+2K)=-\operatorname{sn}w$, период $4K$.
@@ -208,7 +215,7 @@ $$F(z)=iK'-\int_z^{\infty}F'(\zeta)\,d\zeta=iK'+\frac1{kz}+O(z^{-3}),$$
 - Путать модуль $k$ с номером и забыть ограничение $0<k<1$.
 :::
 
-## 9. Связи с другими билетами
+## 8. Связи с другими билетами
 
 - [Билет 22](ticket_22.html): $F$ — интеграл Кристоффеля–Шварца для прямоугольника.
 - [Билет 17](ticket_17.html): $\operatorname{sn}$ — эллиптическая функция порядка 2.
@@ -216,7 +223,7 @@ $$F(z)=iK'-\int_z^{\infty}F'(\zeta)\,d\zeta=iK'+\frac1{kz}+O(z^{-3}),$$
 - [Билет 20](ticket_20.html): риманова поверхность $\sqrt{(1-z^2)(1-k^2z^2)}$ — тор.
 - [Билет 23](ticket_23.html): та же техника «построить отображение на многоугольник и отражать», но для кругового треугольника с нулевыми углами.
 
-## 10. Самопроверка
+## 9. Самопроверка
 
 ::: quiz
 1. Как строится эллиптический синус?
